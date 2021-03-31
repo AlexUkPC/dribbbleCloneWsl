@@ -1,0 +1,44 @@
+version: "3"
+services:
+  web_dribbbleclonewsl:
+    build:
+      context: .
+      args:
+        USER_ID: "${USER_ID:-1000}"
+        GROUP_ID: "${GROUP_ID:-1000}"
+    ports:
+      - "3006:3000"
+    volumes: 
+      - ./dribbbleclonewsl:/opt/app
+      - gem_cache_dribbbleclonewsl:/gems
+    env_file: 
+      - .env/development/database_dribbbleclonewsl
+      - .env/development/web_dribbbleclonewsl
+    environment: 
+      - WEBPACKER_DEV_SERVER_HOST=webpack_dev_server_dribbbleclonewsl
+  webpack_dev_server_dribbbleclonewsl:
+    build:
+      context: .
+      args:
+        USER_ID: "${USER_ID:-1000}"
+        GROUP_ID: "${GROUP_ID:-1000}"
+    command: ./bin/webpack-dev-server
+    ports: 
+      - "3041:3041"
+    volumes: 
+      - ./dribbbleclonewsl:/opt/app
+      - gem_cache_dribbbleclonewsl:/gems
+    env_file: 
+      - .env/development/database_dribbbleclonewsl
+      - .env/development/web_dribbbleclonewsl
+    environment: 
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+  database_dribbbleclonewsl:
+    image: postgres
+    env_file: 
+      - .env/development/database_dribbbleclonewsl
+    volumes: 
+      - db_data_dribbbleclonewsl:/var/lib/postgresql/data
+volumes: 
+  db_data_dribbbleclonewsl:
+  gem_cache_dribbbleclonewsl:
