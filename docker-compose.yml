@@ -16,6 +16,8 @@ services:
       - .env/development/web_dribbbleclonewsl
     environment: 
       - WEBPACKER_DEV_SERVER_HOST=webpack_dev_server_dribbbleclonewsl
+    networks:
+      - network
   webpack_dev_server_dribbbleclonewsl:
     build:
       context: .
@@ -33,12 +35,18 @@ services:
       - .env/development/web_dribbbleclonewsl
     environment: 
       - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+    networks:
+      - network
   database_dribbbleclonewsl:
     image: postgres
     env_file: 
       - .env/development/database_dribbbleclonewsl
     volumes: 
       - db_data_dribbbleclonewsl:/var/lib/postgresql/data
+    networks:
+      - network
 volumes: 
   db_data_dribbbleclonewsl:
   gem_cache_dribbbleclonewsl:
+networks:
+  network:   

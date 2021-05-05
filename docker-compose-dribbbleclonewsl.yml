@@ -11,6 +11,8 @@ services:
       - VIRTUAL_HOST=dribbbleclonewsl.alexrogna.com
       - VIRTUAL_PORT=3000
       - LETSENCRYPT_HOST=dribbbleclonewsl.alexrogna.com
+    networks:
+      - proxy
     restart: always
 
   database_dribbbleclonewsl:
@@ -19,6 +21,8 @@ services:
       - .env/production/database_dribbbleclonewsl
     volumes:
       - db_data_dribbbleclonewsl:/var/lib/postgresql/data
+    networks:
+      - proxy
     restart: always
     
   db-migrator_dribbbleclonewsl:
@@ -27,5 +31,9 @@ services:
     env_file:
       - .env/production/database_dribbbleclonewsl
       - .env/production/web_dribbbleclonewsl
+    networks:
+      - proxy
 volumes:
   db_data_dribbbleclonewsl:
+networks:
+  proxy:
