@@ -1,1 +1,2 @@
 DATABASE_HOST=database_dribbbleclonewsl
+DISABLE_SPRING=true
